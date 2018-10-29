@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PrjMngModelStoreContainer" CdmEntityContainer="PrjMngEntities">
+    <EntitySetMapping Name="t_UserInfo">
+      <EntityTypeMapping TypeName="PrjMngModel.t_UserInfo">
+        <MappingFragment StoreEntitySet="t_UserInfo">
+          <ScalarProperty Name="Eid" ColumnName="Eid" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="EmpPhone" ColumnName="EmpPhone" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="EmpImg" ColumnName="EmpImg" />
+          <ScalarProperty Name="EmpAdrs" ColumnName="EmpAdrs" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UsrPwd" ColumnName="UsrPwd" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="t_NavMenus">
+      <EntityTypeMapping TypeName="PrjMngModel.t_NavMenus">
+        <MappingFragment StoreEntitySet="t_NavMenus">
+          <ScalarProperty Name="NavUrl" ColumnName="NavUrl" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="NavName" ColumnName="NavName" />
+          <ScalarProperty Name="NavID" ColumnName="NavID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PrjMngModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="t_UserInfo">
+    <Key>
+      <PropertyRef Name="Eid" />
+    </Key>
+    <Property Name="Eid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmpPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmailID" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="EmpImg" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="EmpAdrs" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsrPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="PrjMngEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="t_UserInfo" EntityType="Self.t_UserInfo" />
+    <EntitySet Name="t_NavMenus" EntityType="PrjMngModel.t_NavMenus" />
+  </EntityContainer>
+  <EntityType Name="t_NavMenus">
+    <Key>
+      <PropertyRef Name="NavID" />
+    </Key>
+    <Property Name="NavID" Type="Int32" Nullable="false" />
+    <Property Name="NavName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ParentID" Type="Int32" />
+    <Property Name="NavUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PrjMngModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="t_NavMenus">
+    <Key>
+      <PropertyRef Name="NavID" />
+    </Key>
+    <Property Name="NavID" Type="int" Nullable="false" />
+    <Property Name="NavName" Type="varchar" MaxLength="50" />
+    <Property Name="ParentID" Type="int" />
+    <Property Name="NavUrl" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="t_UserInfo">
+    <Key>
+      <PropertyRef Name="Eid" />
+    </Key>
+    <Property Name="Eid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeID" Type="varchar" MaxLength="50" />
+    <Property Name="EmpName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="EmpPhone" Type="varchar" MaxLength="50" />
+    <Property Name="EmailID" Type="varchar" MaxLength="250" />
+    <Property Name="EmpImg" Type="varchar" MaxLength="250" />
+    <Property Name="EmpAdrs" Type="varchar" MaxLength="500" />
+    <Property Name="UserId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UsrPwd" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="PrjMngModelStoreContainer">
+    <EntitySet Name="t_NavMenus" EntityType="Self.t_NavMenus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="t_UserInfo" EntityType="Self.t_UserInfo" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
