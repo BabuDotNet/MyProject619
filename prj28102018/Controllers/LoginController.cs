@@ -18,7 +18,7 @@ namespace prj28102018.Controllers
         public ActionResult Login(UserModel oUserModel)
         {
             
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index1", "Home");
             
            
         }

@@ -16,7 +16,12 @@ namespace prj28102018.Controllers
 
             return View();
         }
+        public ActionResult Index1()
+        {
+          //  var result = _db.t_UserInfo.ToList();
 
+            return View();
+        }
         public JsonResult GetEmpDetails(int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null)
         {
             
