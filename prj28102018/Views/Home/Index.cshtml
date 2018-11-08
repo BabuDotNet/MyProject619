@@ -1,114 +1,579 @@
-﻿@{
-    // Layout = "~/Views/Shared/_Layout.cshtml";
-    //Layout = null vishnu;
+﻿
+@{
+    ViewBag.Title = "Index1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ShowGrid</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+<style>
 
-    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    /*/*.filter-option {
+        display: none;
+    }
 
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+    .dropdown-menu {
+        display: none;
+    }
 
-    <script>
-        $(document).ready(function () {
-            $("#demoGrid").DataTable({
-
-                "processing": true, // for show progress bar
-                "serverSide": true, // for process server side
-                "filter": true, // this is for disable filter (search box)
-                "orderMulti": false, // for disable multiple column at once
-                "pageLength": 5,
-
-                "ajax": {
-                    "url": "/Home/LoadData",
-                    "type": "POST",
-                    "datatype": "json"
-                },
-
-                "columnDefs":
-                    [
-                        //    {
-                        //    "targets": [0],
-                        //    "visible": false,
-                        //    "searchable": false
-                        //},
-                        //{
-                        //    "targets": [2],
-                        //    "searchable": false,
-                        //    "orderable": false
-                        //},
-                        //{
-                        //    "targets": [3],
-                        //    "searchable": false,
-                        //    "orderable": false
-                        //},
-                        //{
-                        //    "targets": [4],
-                        //    "searchable": false,
-                        //    "orderable": false
-                        //    }
-                    ],
-
-                "columns": [
-                    { "data": "EmployeeID", "name": "EmployeeID", "autoWidth": true },
-                    { "data": "EmailID", "name": "EmailID", "autoWidth": true },
-                    { "data": "EmpPhone", "name": "EmpPhone", "autoWidth": true },
-                    { "data": "EmpName", "name": "EmpName", "autoWidth": true },
-                    //            public string EmployeeID { get; set; }
-                    //public string EmpName { get; set; }
-                    //public string EmpPhone { get; set; }
-                    //public string EmailID { get; set; }
-                    //public string EmpImg { get; set; }
-                    //public string EmpAdrs { get; set; }
-
-                    { "data": "EmpName", "name": "EmpName", "autoWidth": true },
-                    { "data": "EmpName", "name": "EmpName", "autoWidth": true },
+    .bs-caret
+    {
+        display:none;
+    }*/
+</style>
 
 
-                    {
-                        "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Demo/Edit/' + full.CustomerID + '">Edit</a>'; }
-                    },
-                    {
-                        data: null, render: function (data, type, row) {
-                            return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.CustomerID + "'); >Delete</a>";
-                        }
-                    },
 
-                ]
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-            });
-        });
-    </script>
 
-</head>
-<body>
-    <div class="container">
-        <br />
-        <div style="width:90%; margin:0 auto;">
-            <table id="demoGrid" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>CustomerID</th>
-                        <th>CompanyName</th>
-                        <th>ContactName</th>
-                        <th>ContactTitle</th>
-                        <th>City</th>
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>
+            USER LIST
+            @*<small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>*@
+        </h2>
+    </div>
 
-                        <th>Phone</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-            </table>
+
+
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" onclick="clearTextBox();">Add New Employee</button><br /><br />
+
+
+                </div>
+                <div class="body">
+                    <div class="table-responsive">
+                        <table id="demoGrid" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+
+                                    <th>EmployeeID</th>
+                                    <th>EmployeeName</th>
+
+                                    <th>UserName</th>
+
+                                    <th>Contact</th>
+                                    <th>Adress</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+
+                                </tr>
+                            </thead>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</body>
-</html>
+
+
+</div>
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+
+
+
+                    <div class="form-group form-float">
+
+                        <div class="form-line">
+                            <input type="text" class="form-control" id="txtEmpName" name="EmpName" required placeholder="Name">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+
+                        <div class="form-line">
+                            <input type="text" class="form-control" id="txtEmpID" name="EmpID" required placeholder="Emp Id">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float" style="display:none">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="EId" id="txtEid">
+                            <label class="form-label">Eid</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+
+                        <div class="form-line">
+                            <input type="email" class="form-control" name="email" id="txtEmail" required placeholder="Email">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="gender" id="male" class="with-gap">
+                        <label for="male">Male</label>
+                        <input type="radio" name="gender" id="female" class="with-gap">
+                        <label for="female" class="m-l-20">Female</label>
+                    </div>
+
+                    <div class="form-group form-float">
+
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="phone" id="txtPhone" required placeholder="Phone">
+
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+
+                        <div class="form-line">
+                            <textarea name="description" cols="30" rows="3" class="form-control no-resize"
+                                      id="txtAdress" required placeholder="Adress"></textarea>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group form-float">
+
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="phone" id="txtUserName" placeholder="User Name">
+
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+
+                        <div class="form-line">
+                            <input type="password" class="form-control" name="password" id="txtPwd" placeholder="password" required>
+
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <input type="checkbox" id="checkbox" name="checkbox">
+                            <label for="checkbox">I have read and accept the terms</label>
+                        </div>*@
+                    <button class="btn btn-primary waves-effect" type="submit" id="btnAdd">SUBMIT</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;">Update</button>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+
+
+
+
+
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+
+
+@*<script src="~/Scripts/plugins/jquery/jquery.min.js"></script>*@
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>*@
+<script>
+    $(document).ready(function () {
+        $("#demoGrid").DataTable({
+
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "pageLength": 5,
+
+            "ajax": {
+                "url": "/Home/LoadData",
+                "type": "POST",
+                "datatype": "json"
+            },
+
+            "columnDefs":
+                [
+                    //    {
+                    //    "targets": [0],
+                    //    "visible": false,
+                    //    "searchable": false
+                    //},
+                    //{
+                    //    "targets": [2],
+                    //    "searchable": false,
+                    //    "orderable": false
+                    //},
+                    //{
+                    //    "targets": [3],
+                    //    "searchable": false,
+                    //    "orderable": false
+                    //},
+                    //{
+                    //    "targets": [4],
+                    //    "searchable": false,
+                    //    "orderable": false
+                    //    }
+                ],
+
+            "columns": [
+                { "data": "Eid", "name": "Eid", "autoWidth": true },
+                { "data": "EmployeeID", "name": "EmployeeID", "autoWidth": true },
+                { "data": "EmpName", "name": "EmpName", "autoWidth": true },
+                { "data": "UserId", "name": "UserId", "autoWidth": true },
+
+                { "data": "EmpPhone", "name": "EmpPhone", "autoWidth": true },
+
+
+
+                //<th>EmployeeID</th>
+                //<th>UserName</th>
+                //<th>EmployeeName</th>
+                //<th>Contact</th>
+                //<th>City</th>
+                //<th>Email</th>
+                //<th>Edit</th>
+                //<th>Delete</th>
+
+                { "data": "EmpAdrs", "name": "EmpAdrs", "autoWidth": true },
+                { "data": "EmailID", "name": "EmailID", "autoWidth": true },
+
+
+                //{
+                //    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Home/Get_EmployeeById/' + full.Eid + '">Edit</a>'; }
+                //},
+                //{
+                //    data: null, render: function (data, type, row) {
+                //        return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.CustomerID + "'); >Delete</a>";
+                //    }
+                //},
+
+
+                {
+                    "targets": -1,
+                    "data": null,
+                    'searchable': false,
+                    'orderable': false,
+                    "defaultContent":
+                        '<td><span class="editor_edit glyphicon glyphicon-edit marginLeft10" id="save"></span><span class="editor_remove glyphicon glyphicon-trash spanRed marginLeft10" id="edit"></span></td>'
+
+                }
+            ]
+
+        });
+        $("#btnCreateAsset").on("click", function () {
+
+            var url = $(this).data("url");
+
+            $.get(url, function (data) {
+                $('#createAssetContainer').html(data);
+
+                $('#createAssetModal').modal('show');
+            });
+
+        });
+
+        ////For editing blockmaster
+        //$('#' + demoGrid + ' tbody').on('click', '.editor_edit', function () {
+
+        //  alert("edit")
+
+        //});
+
+
+        $("#btnAdd").on("click", function () {
+
+            Add1();
+
+        });
+
+        $("#btnUpdate").on("click", function () {
+
+
+            Update();
+        });
+
+
+        var table = $('#demoGrid').DataTable();
+
+        $('#demoGrid tbody').on('click', '.editor_edit', function () {
+            // var data = table.row(this).data();
+            var Id = table.row($(this).parents('tr')).data().Eid;
+            // alert(SchBlockId);
+            $.ajax({
+                url: "/Home/Get_EmployeeById/" + Id,
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result)
+                    $('#txtEid').val(result.Eid);
+
+
+                    $('#txtEmpID').val(result.EmployeeID);
+                    $('#txtEmpName').val(result.EmpName);
+                    $('#txtPhone').val(result.EmpPhone);
+                    $('#txtEmail').val(result.EmailID);
+                    $('#txtAdress').val(result.EmpAdrs);
+                    $('#txtUserName').val(result.UserId);
+                    $('#txtPwd').val(result.UsrPwd);
+
+
+
+
+
+
+                    //Active: true
+                    //Eid: 1
+                    //EmailID: "DEAN.ELGER.COM"
+                    //EmpAdrs: "HYD"
+                    //EmpImg: "ghgh"
+                    //EmpName: "DEAN ELGET"
+                    //EmpPhone: "8787987878"
+                    //EmployeeID: "AGM1"
+                    //UserId: "Test"
+                    //UsrPwd: "Test"
+                    console.log(result)
+                    jQuery.noConflict();
+                    //  $('#myModal').modal('show');
+                    $('#myModal1').modal('show');
+                    $('#btnUpdate').show();
+                    $('#btnAdd').hide();
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+            return false;
+        });
+
+        $('#demoGrid tbody').on('click', '.editor_remove', function () {
+            // var data = table.row(this).data();
+            var Eid = table.row($(this).parents('tr')).data().Eid;
+            alert(Eid);
+
+            Delete1(Eid);
+
+
+
+
+
+        });
+
+
+
+    });
+
+
+    //Add Data Function
+    function Add1() {
+        //var res = validate();
+        //if (res == false) {
+        //    return false;
+        //}
+        var order = {
+            Eid: $('#txtEid').val(),
+            EmpName: $('#txtEmpName').val(),
+            EmailID: $('#txtEmail').val(),
+            EmpPhone: $('#txtPhone').val(),
+            EmpAdrs: $('#txtAdress').val(),
+            EmpImg: $('#txtEmpName').val(),
+            UserId: $('#txtUserName').val(),
+            UsrPwd: $('#txtPwd').val(),
+            EmployeeID: $('#txtEmpID').val(),
+
+            Active: 1
+        };
+
+
+        //        public string EmployeeID { get; set; }
+        //public string EmpName { get; set; }
+        //public string EmpPhone { get; set; }
+        //public string EmailID { get; set; }
+        //public string EmpImg { get; set; }
+        //public string EmpAdrs { get; set; }
+        //public string UserId { get; set; }
+        //public string UsrPwd { get; set; }
+        //public bool Active { get; set; }
+
+
+
+
+        console.log(order);
+
+
+        $.ajax({
+            url: "/Home/save",
+            data: JSON.stringify(order),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //  loadData();
+                $('#myModal').modal('hide');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    //Function for getting the Data Based upon Employee ID
+    function getbyID(EmpID) {
+        $('#Name').css('border-color', 'lightgrey');
+        $('#Age').css('border-color', 'lightgrey');
+        $('#State').css('border-color', 'lightgrey');
+        $('#Country').css('border-color', 'lightgrey');
+        $.ajax({
+            url: "/Home/Get_EmployeeById/" + EmpID,
+            typr: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+
+
+
+                $('#EmployeeID').val(result.EmployeeID);
+                $('#Name').val(result.Name);
+                $('#Age').val(result.Age);
+                $('#State').val(result.State);
+                $('#Country').val(result.Country);
+
+                $('#myModal').modal('show');
+                $('#btnUpdate').show();
+                $('#btnAdd').hide();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+        return false;
+    }
+
+    //function for updating employee's record
+    function Update() {
+        //var res = validate();
+        //if (res == false) {
+        //    return false;
+        //}
+        var emp = {
+            Eid  : $('#txtEid').val(),
+            EmpName: $('#txtEmpName').val(),
+            EmployeeID: $('#txtEmpID').val(),
+            EmailID: $('#txtEmail').val(),
+            EmpPhone: $('#txtPhone').val(),
+            EmpAdrs: $('#txtAdress').val(),
+            EmpImg: $('#txtEmpName').val(),
+            UserId: $('#txtUserName').val(),
+            UsrPwd: $('#txtPwd').val(),
+            Active: 1
+        };
+
+        $.ajax({
+            url: "/Home/update",
+            data: JSON.stringify(emp),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+              //  loadData();
+                $('#myModal1').modal('hide');
+                //$('#EmployeeID').val("");
+                //$('#Name').val("");
+                //$('#Age').val("");
+                //$('#State').val("");
+                //$('#Country').val("");
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    //function for deleting employee's record
+    function Delete1(Eid) {
+        var url = '@Url.Content("~/")' + "Home/DeleteCustomer";
+        $.post(url, { Eid: Eid }, function (data) {
+            if (data == "Deleted") {
+                alert("Delete Customer !");
+               // oTable = $('#demoGrid').DataTable();
+               // oTable.draw();
+            }
+            else {
+                alert("Something Went Wrong!");
+            }
+        });
+    }
+    //Function for clearing the textboxes
+    function clearTextBox() {
+        $('#Eid').val("");
+        $('#txtEmpName').val("");
+        $('#txtEmail').val("");
+        $('#txtPhone').val("");
+        $('#txtAdress').val("");
+        $('#txtUserName').val("");
+        $('#txtPwd').val("");
+        $('#btnUpdate').hide();
+        $('#btnAdd').show();
+        $('#Name').css('border-color', 'lightgrey');
+        $('#Age').css('border-color', 'lightgrey');
+        $('#State').css('border-color', 'lightgrey');
+        $('#Country').css('border-color', 'lightgrey');
+    }
+    //Valdidation using jquery
+    function validate() {
+        var isValid = true;
+        if ($('#Name').val().trim() == "") {
+            $('#Name').css('border-color', 'Red');
+            isValid = false;
+        }
+        else {
+            $('#Name').css('border-color', 'lightgrey');
+        }
+        if ($('#Age').val().trim() == "") {
+            $('#Age').css('border-color', 'Red');
+            isValid = false;
+        }
+        else {
+            $('#Age').css('border-color', 'lightgrey');
+        }
+        if ($('#State').val().trim() == "") {
+            $('#State').css('border-color', 'Red');
+            isValid = false;
+        }
+        else {
+            $('#State').css('border-color', 'lightgrey');
+        }
+        if ($('#Country').val().trim() == "") {
+            $('#Country').css('border-color', 'Red');
+            isValid = false;
+        }
+        else {
+            $('#Country').css('border-color', 'lightgrey');
+        }
+        return isValid;
+    }
+</script>
