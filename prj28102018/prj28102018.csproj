@@ -369,6 +369,9 @@
       <DependentUpon>PrjMngModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Icons\Graphicloads-Flat-Finance-Global.ico" />
+    <Content Include="Scripts\Icons\icons8-school-64.png" />
+    <Content Include="Scripts\Icons\Softskin-Series-Folder-Folder-BD-Files.ico" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
